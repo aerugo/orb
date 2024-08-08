@@ -883,3 +883,61 @@
 
 # 2024-08-08 23:00:10.430608
 +/help
+
+# 2024-08-08 23:20:34.514064
++/ls
+
+# 2024-08-08 23:21:12.527512
++/ask Would it be possible to write the code with Python and still render it in the browser?
+
+# 2024-08-08 23:22:02.680689
++ls
+
+# 2024-08-08 23:23:03.538769
++/ask Would it be possible to write the code with Python and still render it in the browser?
+
+# 2024-08-08 23:35:27.917925
++/ask how can I host this project on GitHub Pages?
+
+# 2024-08-08 23:36:04.553646
++/add fra
+
+# 2024-08-08 23:36:25.856831
++/add fractal.js index.html 
+
+# 2024-08-08 23:37:12.768044
++/ask how can I host this project on GitHub Pages? Running it locally seems to require booting up a python server to serve it, but I don't really understand why, because it's just a javascript file and a html file. 
+
+# 2024-08-08 23:53:43.124973
++I would like the background to be a photorealistic sky and the particles be bees.
+
+# 2024-08-08 23:54:48.115577
++I can't see any difference, the sky is still dark
+
+# 2024-08-08 23:55:33.246815
++I still cannot see a sky background, it's just dark
+
+# 2024-08-08 23:56:11.485742
++Are you sure the sky is being shown at all?
+
+# 2024-08-08 23:57:04.832855
++/undo
+
+# 2024-08-08 23:57:22.630954
++/clear
+
+# 2024-08-08 23:57:57.603422
++Instead of a black background, render a blue background with white clouds, rendered with shaders.
+
+# 2024-08-08 23:59:18.148957
++I can't see the shader background. Why could that be? I don't think it's being rendered around the scene.
+
+# 2024-08-08 23:59:49.802936
++Uncaught ReferenceError: skyMesh is not defined
++    at animate
+
+# 2024-08-09 00:01:10.089422
++/undo
+
+# 2024-08-09 00:07:58.110982
++Instead of starting audio with the button, start the audio when the user presses either the mouse, W, A, S, D or the space bar. 
