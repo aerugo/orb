@@ -1,0 +1,885 @@
+
+# 2024-08-08 20:31:46.095212
++I want you to make fractal 3d visualization that I can view in the browser.
+
+# 2024-08-08 20:33:01.853803
++Amazing! Good start! Can we add some cool glow?
+
+# 2024-08-08 20:33:39.660877
++Now it's just a black screen
+
+# 2024-08-08 20:34:32.980478
++It's still just a black screen!
+
+# 2024-08-08 20:35:06.449739
++/undo
+
+# 2024-08-08 20:38:52.632180
++/clear
+
+# 2024-08-08 20:40:09.706214
++Update my 3D visualization so that the colors of the dots are a gradient proportional to the distance from the function edge. 
+
+# 2024-08-08 20:41:07.175241
++/undo
+
+# 2024-08-08 20:41:09.141308
++/clear
+
+# 2024-08-08 20:42:05.872350
++Change the color of each dot to a gradient proportional to the center of the bulb. Change the color cyclicaly. 
+
+# 2024-08-08 20:43:22.240001
++Change so that the dots are speheres and not squares.
+
+# 2024-08-08 20:44:06.355892
++fractal.js:66 Uncaught 
++TypeError: object is not iterable (cannot read property Symbol(Symbol.iterator))
++    at fractal.js:66:27
++    at Array.forEach (<anonymous>)
++    at animate (fractal.js:65:22)
+
+# 2024-08-08 20:45:34.243961
++Add some glow to the spheres. Spheres closer to other speheres should have more glow.
+
+# 2024-08-08 20:46:22.200943
++fractal.js:12 Uncaught TypeError: THREE.EffectComposer is not a constructor
++    at init (fractal.js:12:16)
++    at fractal.js:132:1
+
+# 2024-08-08 20:47:32.758481
++fractal.js:4 Uncaught ReferenceError: THREE is not defined
++    at init (fractal.js:4:5)
++    at fractal.js:132:1
++init @ fractal.js:4
++(anonymous) @ fractal.js:132
++index.html:15 
++        
++        
++       GET https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/jsm/postprocessing/EffectComposer.js net::ERR_ABORTED 404 (Not Found)
++index.html:16 
++        
++        
++       GET https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/jsm/postprocessing/RenderPass.js net::ERR_ABORTED 404 (Not Found)
++index.html:17 
++        
++        
++       GET https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/jsm/postprocessing/UnrealBloomPass.js net::ERR_ABORTED 404 (Not Found)
+
+# 2024-08-08 20:48:20.822835
++Access to script at 'file:///Users/hugi/GitRepos/funtests/3dfun/fractal.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: http, isolated-app, arc, https, chrome-untrusted, data, chrome-extension, chrome.
++index.html:23 
++        
++        
++       GET file:///Users/hugi/GitRepos/funtests/3dfun/fractal.js net::ERR_FAILED
++index.html:1 Access to script at 'file:///Users/hugi/GitRepos/funtests/3dfun/fractal.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: http, isolated-app, arc, https, chrome-untrusted, data, chrome-extension, chrome.
++index.html:23 
++        
++        
++       GET file:///Users/hugi/GitRepos/funtests/3dfun/fractal.js net::ERR_FAILED
+
+# 2024-08-08 20:49:18.217851
++three.module.js:26815 Uncaught 
++TypeError: Cannot read properties of undefined (reading 'value')
++    at refreshUniformsCommon (three.module.js:26815:22)
++    at Object.refreshMaterialUniforms (three.module.js:26727:4)
++    at setProgram (three.module.js:29421:15)
++    at WebGLRenderer.renderBufferDirect (three.module.js:28302:20)
++    at renderObject (three.module.js:28973:11)
++    at renderObjects (three.module.js:28942:6)
++    at renderScene (three.module.js:28830:36)
++    at WebGLRenderer.render (three.module.js:28644:5)
++    at RenderPass.render (RenderPass.js:61:12)
++    at EffectComposer.render (EffectComposer.js:123:9)
++three.module.js:26815 Uncaught 
++TypeError: Cannot read properties of undefined (reading 'value')
++    at refreshUniformsCommon (three.module.js:26815:22)
++    at Object.refreshMaterialUniforms (three.module.js:26727:4)
++    at setProgram (three.module.js:29421:15)
++    at WebGLRenderer.renderBufferDirect (three.module.js:28302:20)
++    at renderObject (three.module.js:28973:11)
++    at renderObjects (three.module.js:28942:6)
++    at renderScene (three.module.js:28830:36)
++    at WebGLRenderer.render (three.module.js:28644:5)
++    at RenderPass.render (RenderPass.js:61:12)
++    at EffectComposer.render (EffectComposer.js:123:9)
++17
++[Violation] 'requestAnimationFrame' handler took <N>ms
++three.module.js:26815 Uncaught 
++TypeError: Cannot read properties of undefined (reading 'value')
++    at refreshUniformsCommon (three.module.js:26815:22)
++    at Object.refreshMaterialUniforms (three.module.js:26727:4)
++    at setProgram (three.module.js:29421:15)
++    at WebGLRenderer.renderBufferDirect (three.module.js:28302:20)
++    at renderObject (three.module.js:28973:11)
++    at renderObjects (three.module.js:28942:6)
++    at renderScene (three.module.js:28830:36)
++    at WebGLRenderer.render (three.module.js:28644:5)
++    at RenderPass.render (RenderPass.js:61:12)
++    at EffectComposer.render (EffectComposer.js:123:9)
++three.module.js:26815 Uncaught 
++TypeError: Cannot read properties of undefined (reading 'value')
++    at refreshUniformsCommon (three.module.js:26815:22)
++    at Object.refreshMaterialUniforms (three.module.js:26727:4)
++    at setProgram (three.module.js:29421:15)
++    at WebGLRenderer.renderBufferDirect (three.module.js:28302:20)
++    at renderObject (three.module.js:28973:11)
++    at renderObjects (three.module.js:28942:6)
++    at renderScene (three.module.js:28830:36)
++    at WebGLRenderer.render (three.module.js:28644:5)
++    at RenderPass.render (RenderPass.js:61:12)
++    at EffectComposer.render (EffectComposer.js:123:9)
++three.module.js:26815 Uncaught 
++TypeError: Cannot read properties of undefined (reading 'value')
++    at refreshUniformsCommon (three.module.js:26815:22)
++    at Object.refreshMaterialUniforms (three.module.js:26727:4)
++    at setProgram (three.module.js:29421:15)
++    at WebGLRenderer.renderBufferDirect (three.module.js:28302:20)
++    at renderObject (three.module.js:28973:11)
++    at renderObjects (three.module.js:28942:6)
++    at renderScene (three.module.js:28830:36)
++    at WebGLRenderer.render (three.module.js:28644:5)
++    at RenderPass.render (RenderPass.js:61:12)
++    at EffectComposer.render (EffectComposer.js:123:9)
+
+# 2024-08-08 20:49:57.387016
++[Violation] 'requestAnimationFrame' handler took <N>ms
++fractal.js:84 [Violation] 'requestAnimationFrame' handler took 1327ms
++fractal.js:84 [Violation] 'requestAnimationFrame' handler took 553ms
++fractal.js:84 [Violation] 'requestAnimationFrame' handler took 583ms
++fractal.js:84 [Violation] 'requestAnimationFrame' handler took 548ms
++fractal.js:84 [Violation] 'requestAnimationFrame' handler took 549ms
++fractal.js:84 [Violation] 'requestAnimationFrame' handler took 540ms
++fractal.js:84 [Violation] 'requestAnimationFrame' handler took 536ms
++fractal.js:84 [Violation] 'requestAnimationFrame' handler took 558ms
++fractal.js:84 [Violation] 'requestAnimationFrame' han
+
+# 2024-08-08 20:53:19.049472
++How can we improve the performance of the code to allow for a high number of spheres? I'm using a Macbook Pro M1. Can we somehow use hardware acceleration?
+
+# 2024-08-08 20:57:06.214844
++Now, have the spheres move between this configuration and anoteher configuration. The other configuration should be a hollow sphere with a radius that apporaximately contains the blobs surface.
+
+# 2024-08-08 20:59:17.254336
++Now update it so that the interpolation also happens in reverse back to the initial shape, and then loops
+
+# 2024-08-08 21:01:31.077359
++Now let's add sound effects! Play a synthesizer arpeggio and switch between two chords during the interpolation.
+
+# 2024-08-08 21:02:27.759009
++How do I hear the sound? When I reload I still don't hear any music.
+
+# 2024-08-08 21:03:31.412608
++Ok! Great! But make the music sound more space-age and cool, like David Bowie in Berlin.
+
+# 2024-08-08 21:04:49.881576
++Coool! But add more pads and make it more drony.
+
+# 2024-08-08 21:05:48.900232
++Uncaught Error: Cannot connect to undefined node
++    at Bn (Debug.ts:10:9)
++    at ro (ToneAudioNode.ts:315:2)
++    at fo (Signal.ts:225:2)
++    at rr.connect (LFO.ts:305:3)
++    at initAudio (fractal.js:313:8)
++    at init (fractal.js:25:5)
++    at fractal.js:387:1
+
+# 2024-08-08 21:06:21.441070
++Uncaught SyntaxError: Identifier 'init' has already been declared (at fractal.js:362:1)
+
+# 2024-08-08 21:07:12.289819
++Error: Cannot connect to undefined node
++    at Bn (Debug.ts:10:9)
++    at ro (ToneAudioNode.ts:315:2)
++    at fo (Signal.ts:225:2)
++    at rr.connect (LFO.ts:305:3)
++    at initAudio (fractal.js:322:13)
++    at init (fractal.js:25:5)
++    at fractal.js:420:1
++Bn @ Debug.ts:10
++ro @ ToneAudioNode.ts:315
++fo @ Signal.ts:225
++connect @ LFO.ts:305
++initAudio @ fractal.js:322
++init @ fractal.js:25
++(anonymous) @ fractal.js:420
+
+# 2024-08-08 21:07:40.459116
++The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. <URL>
++Debug.ts:95 The AudioContext is "suspended". Invoke Tone.start() from a user action to start the audio.
++Kn @ Debug.ts:95
++Gn @ Debug.ts:33
++start @ Source.ts:248
++start @ LFO.ts:172
++start @ LFOEffect.ts:66
++initAudio @ fractal.js:273
++init @ fractal.js:25
++(anonymous) @ fractal.js:416
++Debug.ts:10 Uncaught Error: Cannot connect to undefined node
++    at Bn (Debug.ts:10:9)
++    at ro (ToneAudioNode.ts:315:2)
++    at fo (Signal.ts:225:2)
++    at rr.connect (LFO.ts:305:3)
++    at initAudio (fractal.js:334:13)
++    at init (fractal.js:25:5)
++    at fractal.js:416:1
+
+# 2024-08-08 21:09:03.553168
++/und
+
+# 2024-08-08 21:09:09.429744
++/undo
+
+# 2024-08-08 21:09:17.490348
++The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. <URL>
++Debug.ts:95 The AudioContext is "suspended". Invoke Tone.start() from a user action to start the audio.
++Kn @ Debug.ts:95
++Gn @ Debug.ts:33
++start @ Source.ts:248
++start @ LFO.ts:172
++start @ LFOEffect.ts:66
++initAudio @ fractal.js:273
++init @ fractal.js:25
++(anonymous) @ fractal.js:420
++Debug.ts:10 Uncaught Error: Cannot connect to undefined node
++    at Bn (Debug.ts:10:9)
++    at ro (ToneAudioNode.ts:315:2)
++    at fo (Signal.ts:225:2)
++    at rr.connect (LFO.ts:305:3)
++    at initAudio (fractal.js:322:13)
++    at init (fractal.js:25:5)
++    at fractal.js:420:1
+
+# 2024-08-08 21:10:01.732774
++fractal.js:386 Uncaught 
++TypeError: Cannot set properties of undefined (setting 'values')
++    at updateChord (fractal.js:386:24)
++    at animate (fractal.js:158:5)
++updateChord	@	fractal.js:386
++animate	@	fractal.js:158
++requestAnimationFrame		
++animate	@	fractal.js:141
++requestAnimationFrame		
++animate	@	
+
+# 2024-08-08 21:11:15.945066
++the drone chords should change more audibly between the two configurations
+
+# 2024-08-08 21:12:03.242204
++Now when I start the sound, the animation stops
+
+# 2024-08-08 21:12:35.224756
++No, the problem remains. When I Start Audio, the animation stops completely.
+
+# 2024-08-08 21:13:54.922974
++Animation still stops when I press Start Audio. Errors in console: Debug.ts:19 Uncaught 
++RangeError: Value must be within [0, 1], got: 8.370000000000003
++    at Un (Debug.ts:19:9)
++    at no._assertRange (Param.ts:193:4)
++    at no.setValueAtTime (Param.ts:242:8)
++    at set value (Param.ts:149:8)
++    at updateChord (fractal.js:424:25)
++    at animate (fractal.js:158:9)
++Debug.ts:10 Uncaught (in promise) 
++Error: Cannot connect to undefined node
++    at Bn (Debug.ts:10:9)
++    at ro (ToneAudioNode.ts:315:2)
++    at fo (Signal.ts:225:2)
++    at rr.connect (LFO.ts:305:3)
++    at initAudio (fractal.js:322:13)
++    at fractal.js:28:17
++Debug.ts:10 Uncaught (in promise) 
++Error: Cannot connect to undefined node
++    at Bn (Debug.ts:10:9)
++    at ro (ToneAudioNode.ts:315:2)
++    at fo (Signal.ts:225:2)
++    at rr.connect (LFO.ts:305:3)
++    at initAudio (fractal.js:322:13)
++    at fractal.js:436:13
+
+# 2024-08-08 21:16:01.994391
++Errors when clicking Start Audio:fractal.js:357 Error initializing audio: 
++Error: Cannot connect to undefined node
++    at Bn (Debug.ts:10:9)
++    at ro (ToneAudioNode.ts:315:2)
++    at fo (Signal.ts:225:2)
++    at rr.connect (LFO.ts:305:3)
++    at fractal.js:324:21
++    at new Promise (<anonymous>)
++    at initAudio (fractal.js:257:12)
++    at fractal.js:28:17
++fractal.js:368 The following audio nodes are undefined: 
++[undefined]
++fractal.js:33 Audio initialization failed. Some nodes are undefined.
++fractal.js:357 Error initializing audio: 
++Error: Cannot connect to undefined node
++    at Bn (Debug.ts:10:9)
++    at ro (ToneAudioNode.ts:315:2)
++    at fo (Signal.ts:225:2)
++    at rr.connect (LFO.ts:305:3)
++    at fractal.js:324:21
++    at new Promise (<anonymous>)
++    at initAudio (fractal.js:257:12)
++    at fractal.js:442:13
++fractal.js:450 Audio initialization failed: 
++Error: Cannot connect to undefined node
++    at Bn (Debug.ts:10:9)
++    at ro (ToneAudioNode.ts:315:2)
++    at fo (Signal.ts:225:2)
++    at rr.connect (LFO.ts:305:3)
++    at fractal.js:324:21
++    at new Promise (<anonymous>)
++    at initAudio (fractal.js:257:12)
++    at fractal.js:442:13
++fractal.js:401 Arpeggiator is not initialized yet
++fractal.js:405 Uncaught 
++TypeError: Cannot create property 'value' on number '200'
++    at updateChord (fractal.js:405:52)
++    at animate (fractal.js:158:9)
++fractal.js:358 Uncaught (in promise) 
++Error: Cannot connect to undefined node
++    at Bn (Debug.ts:10:9)
++    at ro (ToneAudioNode.ts:315:2)
++    at fo (Signal.ts:225:2)
++    at rr.connect (LFO.ts:305:3)
++    at fractal.js:324:21
++    at new Promise (<anonymous>)
++    at initAudio (fractal.js:257:12)
++    at fractal.js:28:17
+
+# 2024-08-08 21:17:22.291949
++he AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu
++(anonymous) @ audio-context-constructor.js:11
++Di.s.context._context.latencyHint @ AudioContext.ts:13
++Di @ Context.ts:120
++Vi @ Global.ts:26
++(anonymous) @ index.ts:33
++(anonymous) @ index.ts:116
++(anonymous) @ index.ts:116
++(anonymous) @ universalModuleDefinition:9
++(anonymous) @ universalModuleDefinition:1
++Show 1 more frame
++Show less
++Context.ts:198 The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu
++oe @ test-audio-scheduled-source-node-start-method-negative-parameters-support.js:4
++(anonymous) @ native-constant-source-node-factory.js:15
++ge @ cache-test-result.js:12
++(anonymous) @ native-constant-source-node-factory.js:15
++(anonymous) @ constant-source-node-constructor.js:16
++createConstantSource @ base-audio-context-constructor.js:37
++createConstantSource @ Context.ts:198
++uo @ ToneConstantSource.ts:27
++po @ Signal.ts:67
++mo @ TickSignal.ts:38
++go @ TickSource.ts:75
++vo @ Clock.ts:84
++No @ Transport.ts:198
++(anonymous) @ Transport.ts:811
++(anonymous) @ ContextInitialization.ts:24
++initialize @ ContextInitialization.ts:24
++get transport @ Context.ts:303
++(anonymous) @ index.ts:33
++(anonymous) @ index.ts:116
++(anonymous) @ index.ts:116
++(anonymous) @ universalModuleDefinition:9
++(anonymous) @ universalModuleDefinition:1
++Show 6 more frames
++Show less
++ToneConstantSource.ts:73 The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu
++start @ constant-source-node-constructor.js:42
++start @ ToneConstantSource.ts:73
++po @ Signal.ts:75
++mo @ TickSignal.ts:38
++go @ TickSource.ts:75
++vo @ Clock.ts:84
++No @ Transport.ts:198
++(anonymous) @ Transport.ts:811
++(anonymous) @ ContextInitialization.ts:24
++initialize @ ContextInitialization.ts:24
++get transport @ Context.ts:303
++(anonymous) @ index.ts:33
++(anonymous) @ index.ts:116
++(anonymous) @ index.ts:116
++(anonymous) @ universalModuleDefinition:9
++(anonymous) @ universalModuleDefinition:1
++Show 1 more frame
++Show less
++fractal.js:356 Error initializing audio: Error: Cannot connect to undefined node
++    at Bn (Debug.ts:10:9)
++    at ro (ToneAudioNode.ts:315:2)
++    at fo (Signal.ts:225:2)
++    at rr.connect (LFO.ts:305:3)
++    at fractal.js:324:21
++    at new Promise (<anonymous>)
++    at initAudio (fractal.js:257:12)
++    at fractal.js:28:17
++(anonymous) @ fractal.js:356
++initAudio @ fractal.js:257
++(anonymous) @ fractal.js:28
++Promise.then
++(anonymous) @ fractal.js:27
++fractal.js:367 The following audio nodes are undefined: [undefined]
++checkAudioNodes @ fractal.js:367
++(anonymous) @ fractal.js:29
++Promise.then
++(anonymous) @ fractal.js:27
++fractal.js:33 Audio initialization failed. Some nodes are undefined.
++(anonymous) @ fractal.js:33
++Promise.then
++(anonymous) @ fractal.js:27
++fractal.js:356 Error initializing audio: Error: Cannot connect to undefined node
++    at Bn (Debug.ts:10:9)
++    at ro (ToneAudioNode.ts:315:2)
++    at fo (Signal.ts:225:2)
++    at rr.connect (LFO.ts:305:3)
++    at fractal.js:324:21
++    at new Promise (<anonymous>)
++    at initAudio (fractal.js:257:12)
++    at fractal.js:447:13
++(anonymous) @ fractal.js:356
++initAudio @ fractal.js:257
++(anonymous) @ fractal.js:447
++Promise.then
++(anonymous) @ fractal.js:446
++fractal.js:455 Audio initialization failed: Error: Cannot connect to undefined node
++    at Bn (Debug.ts:10:9)
++    at ro (ToneAudioNode.ts:315:2)
++    at fo (Signal.ts:225:2)
++    at rr.connect (LFO.ts:305:3)
++    at fractal.js:324:21
++    at new Promise (<anonymous>)
++    at initAudio (fractal.js:257:12)
++    at fractal.js:447:13
++(anonymous) @ fractal.js:455
++Promise.catch
++(anonymous) @ fractal.js:454
++Promise.then
++(anonymous) @ fractal.js:446
++fractal.js:400 Arpeggiator is not initialized yet
++updateChord @ fractal.js:400
++animate @ fractal.js:158
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++fractal.js:405 Uncaught TypeError: Cannot create property 'value' on number '200'
++    at updateChord (fractal.js:405:40)
++    at animate (fractal.js:158:9)
++updateChord @ fractal.js:405
++animate @ fractal.js:158
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++requestAnimationFrame
++animate @ fractal.js:177
++fractal.js:357 Uncaught (in promise) Error: Cannot connect to undefined node
++    at Bn (Debug.ts:10:9)
++    at ro (ToneAudioNode.ts:315:2)
++    at fo (Signal.ts:225:2)
++    at rr.connect (LFO.ts:305:3)
++    at fractal.js:324:21
++    at new Promise (<anonymous>)
++    at initAudio (fractal.js:257:12)
++    at fractal.js:28:17
++Bn @ Debug.ts:10
++ro @ ToneAudioNode.ts:315
++fo @ Signal.ts:225
++connect @ LFO.ts:305
++(anonymous) @ fractal.js:324
++initAudio @ fractal.js:257
++(anonymous) @ fractal.js:28
++Promise.then
++(anonymous) @ fractal.js:27
+
+# 2024-08-08 21:19:08.766220
++/undo
+
+# 2024-08-08 21:21:13.368532
++git log
+
+# 2024-08-08 21:23:00.922995
++Make the sound more happy, in major chords
+
+# 2024-08-08 21:23:49.204836
++That's not so happy, make it very very more happy
+
+# 2024-08-08 21:25:33.062983
++/ask Apply musical theory to make the soundscape more interesting.
+
+# 2024-08-08 21:26:05.551115
++Implement please.
+
+# 2024-08-08 21:27:38.425290
++Make Jacob Collier style harmonies.
+
+# 2024-08-08 21:29:10.556847
++fractal.js:284 Uncaught ReferenceError: synth1 is not defined
++    at initAudio (fractal.js:284:12)
++    at init (fractal.js:25:5)
++    at fractal.js:396:1
+
+# 2024-08-08 21:29:43.474497
++fractal.js:364 Uncaught ReferenceError: pattern1 is not defined
++    at updateChord (fractal.js:364:5)
++    at animate (fractal.js:155:5)
+
+# 2024-08-08 21:30:28.145214
++Uncaught ReferenceError: arpeggiator is not defined
++    at HTMLButtonElement.<anonymous> 
+
+# 2024-08-08 21:32:46.435435
++Ok great! But now, when the animation is in the blob configuration, make the music very slow, and when the animation is in the sphere configuration, make it fast.
+
+# 2024-08-08 21:33:48.816870
++fractal.js:414 Uncaught TypeError: Tone.Time(...).mult is not a function
++    at updateChord (fractal.js:414:49)
++    at animate (fractal.js:158:5)
++updateChord @ fractal.js:414
++animate @ fractal.js:158
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++requestAnimationFrame
++animate @ fractal.js:141
++877fractal.js:414 Uncaught TypeError: Tone.Time(...).mult is not a function
++    at updateChord (fractal.js:414:49)
++    at animate (fractal.js:158:5)
+
+# 2024-08-08 21:34:13.188092
++fractal.js:414 Uncaught 
++TypeError: Tone.Time(...).multiply is not a function
++    at updateChord (fractal.js:414:49)
++    at animate (fractal.js:158:5)
+
+# 2024-08-08 21:35:32.788219
++Make the change in tempo more clear, increase the tempo of the sphere part and decrease for the blob part
+
+# 2024-08-08 21:38:31.364357
++Now add some interactivity. When I click and drag, I want the spheres where I drag to change color.
+
+# 2024-08-08 21:40:09.670183
++Instead of changing colors, change the trajectory of the spheres for 1 second to move in the opposite direction before moving back to their original trajectory
+
+# 2024-08-08 21:41:40.136104
++Ok! Looking good, but can we apply the effect only to the spheres that are around the area of the mouse pointer?
+
+# 2024-08-08 21:42:14.255764
++Clicking and dragging still affects all spheres. 
+
+# 2024-08-08 21:43:21.368920
++Clicking and dragging still affects all spheres. It should only affect spheres in a portion of the screen around the cursor.
+
+# 2024-08-08 21:44:20.666778
++Great job! Now, with the arrow keys, control the rotation of the camera around the center.
+
+# 2024-08-08 21:45:10.226007
++Make the camera movement smoother
+
+# 2024-08-08 21:46:16.154685
++Great! Now let me fly in the scene with the WASD buttons
+
+# 2024-08-08 21:47:08.887123
++It doesn't work, and now also the arrow keys don't work
+
+# 2024-08-08 21:48:43.413290
++Now the arrow keys function has changed, it doesn't move the camera but rather distorts the view. And the WASD keys still don't work.
+
+# 2024-08-08 21:49:30.053634
++Uncaught SyntaxError: Identifier 'isMouseDown' has already been declared
+
+# 2024-08-08 21:50:48.200252
++Neither arrow keys nor the WASD keys work. Arrow keys should move the camera around the center. WASD keys should allow flying through the scene.
+
+# 2024-08-08 21:51:47.348554
++/undo
+
+# 2024-08-08 21:52:31.359266
++/clear
+
+# 2024-08-08 21:53:37.680659
++Remove the feature that changes the direction of the movement on mouse down.
+
+# 2024-08-08 21:54:15.901224
++/clear
+
+# 2024-08-08 21:54:21.631274
++/ls
+
+# 2024-08-08 21:54:40.825141
++Implement a feature that allows me to look around in the scene with the mouse.
+
+# 2024-08-08 21:56:17.128250
++Instead of moving the camera with the mouse, I want to move the observers view. Like a first person video game.
+
+# 2024-08-08 21:57:52.414045
++Now, allow me to use the WASD keys to move around, like in a first person video game.
+
+# 2024-08-08 21:58:46.003292
++Slow down the speed a bit
+
+# 2024-08-08 22:01:40.197889
++Great! Now, when pressing the space button I want to shoot a red glowing sphere.
+
+# 2024-08-08 22:03:38.783846
++Great! But slow down the speed of the red sphere to about 25%
+
+# 2024-08-08 22:04:47.512224
++Now, when the sphere passes "close" to a particle, the particle should turn black, and then gradually over the next 3 seconds return to its original color schemd
+
+# 2024-08-08 22:06:29.382106
++It doesn't work. All particles the red sphere hits should turn black and then gradually return to color.
+
+# 2024-08-08 22:09:21.700898
++the red sphere should only affect the particles it actually hits
+
+# 2024-08-08 22:10:33.761193
++Every particle the sphere hits should be turned black for 3 seconds.
+
+# 2024-08-08 22:12:28.724703
++When the projectile hits a particle, permanently delete the particle.
+
+# 2024-08-08 22:14:21.232412
++/undo
+
+# 2024-08-08 22:17:27.538146
++Now make the red projectile into a glowing blue orb of light 
+
+# 2024-08-08 22:18:50.228520
++Now try to increase performance, when I shoot there is some lag. Can we improve performace without changing the animation?
+
+# 2024-08-08 22:19:04.900838
++/clear
+
+# 2024-08-08 22:19:07.544030
++Now try to increase performance, when I shoot there is some lag. Can we improve performace without changing the animation?
+
+# 2024-08-08 22:20:12.304603
++this is too laggy, make it smoother
+
+# 2024-08-08 22:20:55.679341
++/undo
+
+# 2024-08-08 22:21:42.726558
++Shooting the projectile introduces some lag. Can we increase performace of the projectile feature?
+
+# 2024-08-08 22:25:03.628899
++Change the soundscape to be drony
+
+# 2024-08-08 22:27:12.327614
++Change the sound to make it louder when moving closer to the center of the sphere and less loud when moving away from it.
+
+# 2024-08-08 22:29:21.887257
++Make a blooooo mystery sine sound when shooting the projectile 
+
+# 2024-08-08 22:30:45.882348
++In the background, behind all the other sounds, add a subtle eery empty hollow windy sound in the background
+
+# 2024-08-08 22:31:42.021728
++Make the eerie hollow windy sound volume constant, not changing depending on movement
+
+# 2024-08-08 22:33:00.750900
++Make the deser hollow sound less windy and more space ambient, like the way empty space sounds in scifi movies
+
+# 2024-08-08 22:33:40.171357
++fractal.js:550 Uncaught 
++ReferenceError: spaceAmbient is not defined
++    at updateVolume (fractal.js:550:5)
++    at animate
+
+# 2024-08-08 22:34:12.100085
++/undo
+
+# 2024-08-08 22:34:52.893634
++Make the empty hollow sound less windy and more space ambient, like the way empty space sounds in scifi movies
+
+# 2024-08-08 22:35:29.537221
++/undo
+
+# 2024-08-08 22:35:35.390482
++/clear
+
+# 2024-08-08 22:35:41.624126
++Make the empty hollow sound less windy and more space ambient, like the way empty space sounds in scifi movies.
+
+# 2024-08-08 22:36:28.049349
++/undo
+
+# 2024-08-08 23:00:10.430608
++/help
