@@ -941,3 +941,12 @@
 
 # 2024-08-09 00:07:58.110982
 +Instead of starting audio with the button, start the audio when the user presses either the mouse, W, A, S, D or the space bar. 
+
+# 2024-08-09 00:12:30.809092
++When entering the game, show instruction text on screen for a few seconds and then fade out.
+
+# 2024-08-09 00:13:31.340953
++Make the text bright magenta
+
+# 2024-08-09 00:14:27.334823
++git commit -am "instruction screen"
