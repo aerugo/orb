@@ -7,9 +7,27 @@
     <style>
         body { margin: 0; }
         canvas { display: block; }
+        #instructions {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            text-align: center;
+            opacity: 1;
+            transition: opacity 2s;
+        }
     </style>
 </head>
 <body>
+    <div id="instructions">
+        Use WASD to move<br>
+        Mouse to look around<br>
+        Space to shoot<br>
+        Click to start
+    </div>
     <script type="importmap">
         {
             "imports": {
