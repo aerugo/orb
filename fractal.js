@@ -46,14 +46,22 @@ function init() {
     // Initialize audio
     initAudio();
 
-    // Add event listener for the start audio button
-    document.getElementById('startAudio').addEventListener('click', () => {
+    // Function to start audio
+    function startAudio() {
         if (Tone.context.state !== 'running') {
             Tone.start();
             pattern1.start(0);
             pattern2.start("8n");
             pattern3.start("8n.");
             Tone.Transport.start();
+        }
+    }
+
+    // Add event listeners for starting audio
+    window.addEventListener('mousedown', startAudio);
+    window.addEventListener('keydown', (event) => {
+        if (['w', 'a', 's', 'd', ' '].includes(event.key.toLowerCase())) {
+            startAudio();
         }
     });
 
