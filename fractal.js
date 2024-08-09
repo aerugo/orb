@@ -2,14 +2,15 @@ import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
-import { ShaderMaterial } from 'three';
+import { ShaderMaterial, AdditiveBlending } from 'three';
 
 let scene, camera, renderer, instancedMesh, clock, composer, bloomPass, raycaster, mouse, cameraDirection, isMouseDown;
-let enemyGlowMaterial;
+let enemyGlowMaterial, explosionMaterial;
 let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
-let synth1, synth2, synth3, reverb, delay, autoFilter, shootSynth, windNoise;
+let synth1, synth2, synth3, reverb, delay, autoFilter, shootSynth, windNoise, explosionSynth;
 let projectiles = new Set();
 let pattern1, pattern2, pattern3;
+let explosions = [];
 const TOTAL_SPHERES = 100000;
 const UPDATE_INTERVAL = 0.1 // Update colors every 0.1 seconds
 let mandelbulbPositions, spherePositions;
@@ -61,6 +62,34 @@ function init() {
             }
         `,
         transparent: true
+    });
+
+    // Create explosion material
+    explosionMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+            time: { value: 0 },
+        },
+        vertexShader: `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `,
+        fragmentShader: `
+            uniform float time;
+            varying vec2 vUv;
+            void main() {
+                vec2 center = vec2(0.5, 0.5);
+                float dist = distance(vUv, center);
+                float ring = smoothstep(0.0, 0.5, dist) * smoothstep(0.5, 0.0, dist);
+                vec3 color = vec3(1.0, 0.5, 0.0) * ring;
+                float alpha = ring * (1.0 - dist * 2.0);
+                gl_FragColor = vec4(color, alpha);
+            }
+        `,
+        transparent: true,
+        blending: AdditiveBlending,
     });
 
     initEnemies();
@@ -262,6 +291,9 @@ function animate() {
     // Update and render enemies
     updateEnemies();
 
+    // Update explosions
+    updateExplosions();
+
     composer.render();
 }
 
@@ -308,9 +340,36 @@ function updateEnemies() {
                 enemies = enemies.filter(e => e !== enemy);
                 scene.remove(projectile);
                 projectiles.delete(projectile);
-                // You could add a sound effect or particle effect here
+                createExplosion(enemy.position);
             }
         });
+    });
+}
+
+function createExplosion(position) {
+    const explosionGeometry = new THREE.SphereGeometry(0.05, 32, 32);
+    const explosion = new THREE.Mesh(explosionGeometry, explosionMaterial);
+    explosion.position.copy(position);
+    explosion.scale.set(0.1, 0.1, 0.1);
+    scene.add(explosion);
+    explosions.push({ mesh: explosion, startTime: clock.getElapsedTime() });
+
+    // Play explosion sound
+    explosionSynth.triggerAttackRelease("C4", "16n");
+}
+
+function updateExplosions() {
+    const currentTime = clock.getElapsedTime();
+    explosions = explosions.filter(explosion => {
+        const age = currentTime - explosion.startTime;
+        if (age > 1) {
+            scene.remove(explosion.mesh);
+            return false;
+        }
+        const scale = Math.min(1, age * 4);
+        explosion.mesh.scale.set(scale, scale, scale);
+        explosion.mesh.material.opacity = 1 - age;
+        return true;
     });
 }
 
@@ -434,6 +493,19 @@ function initAudio() {
             decay: 0.3,
             sustain: 0.1,
             release: 0.5
+        }
+    }).connect(reverb);
+
+    // Create explosion synth
+    explosionSynth = new Tone.NoiseSynth({
+        noise: {
+            type: "white"
+        },
+        envelope: {
+            attack: 0.001,
+            decay: 0.2,
+            sustain: 0.1,
+            release: 0.3
         }
     }).connect(reverb);
 
