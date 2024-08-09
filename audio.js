@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import * as Tone from 'tone';
 let synth1, synth2, synth3, pattern1, pattern2, pattern3;
 
 // Filters
@@ -68,7 +67,7 @@ export const explosionSynth = new Tone.MembraneSynth({
     }
 }).connect(reverb, distortion, lowPass);
 
-const spaceNoise = new Tone.NoiseSynth({
+export const spaceNoise = new Tone.NoiseSynth({
     noise: {
         type: "brown",
         playbackRate: 0.1
@@ -82,7 +81,7 @@ const spaceNoise = new Tone.NoiseSynth({
     volume: -40
 }).connect(reverb, spaceFilter, chorus)
 
-const spaceDrone = new Tone.FMSynth({
+export const spaceDrone = new Tone.FMSynth({
     harmonicity: 0.5,
     modulationIndex: 3,
     oscillator: {
@@ -106,7 +105,7 @@ const spaceDrone = new Tone.FMSynth({
     volume: -25
 }).connect(reverb);
 
-const spacePad = new Tone.PolySynth(Tone.AMSynth, {
+export const spacePad = new Tone.PolySynth(Tone.AMSynth, {
     harmonicity: 3,
     oscillator: {
         type: "sine"
@@ -129,13 +128,13 @@ const spacePad = new Tone.PolySynth(Tone.AMSynth, {
     volume: -30
 }).connect(reverb);
 
-const spaceLfo = new Tone.LFO({
+export const spaceLfo = new Tone.LFO({
     frequency: 0.03,
     min: 100,
     max: 800
 }).connect(spaceFilter.frequency);
 
-const droneLfo = new Tone.LFO({
+export const droneLfo = new Tone.LFO({
     frequency: 0.02,
     min: 50,
     max: 100
@@ -223,22 +222,15 @@ export function updateVolume(distanceFromCenter) {
     // Wind noise volume remains constant
 }
 
-export async function initAudio() {
-    try {
-        await Tone.start();
-        console.log('Audio context started');
+export function initAudio() {
 
-        autoFilter.start();
-        spaceLfo.start();
-        droneLfo.start();
-        spaceNoise.triggerAttack();
-        spaceDrone.triggerAttack("C1");
-        spacePad.triggerAttack(["C2", "G2", "C3"], Tone.now(), 0.1);
-
-        console.log('All audio components initialized');
-    } catch (error) {
-        console.error('Error initializing audio:', error);
-    }
+    autoFilter.start();
+    spaceLfo.start();
+    droneLfo.start();
+    
+    spaceNoise.triggerAttack();
+    spaceDrone.triggerAttack("C1");
+    spacePad.triggerAttack(["C2", "G2", "C3"], Tone.now(), 0.1);
 
     // Slowly modulate the pad notes for an evolving texture
     setInterval(() => {
@@ -302,10 +294,15 @@ export async function initAudio() {
             Tone.Transport.bpm.value = Math.random() * 10 + 55; // Random BPM between 55 and 65
         }
     }, "4m");
+}
 
-    // Ensure Transport is started
-    if (Tone.Transport.state !== "started") {
+// Function to start audio
+export function startAudio() {
+    if (Tone.context.state !== 'running') {
+        Tone.start();
+        pattern1.start(0);
+        pattern2.start("8n");
+        pattern3.start("8n.");
         Tone.Transport.start();
-        console.log('Tone.Transport started');
     }
 }
