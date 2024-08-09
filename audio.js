@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import * as Tone from 'tone';
 let synth1, synth2, synth3, pattern1, pattern2, pattern3;
 
 // Filters
@@ -222,14 +223,22 @@ export function updateVolume(distanceFromCenter) {
     // Wind noise volume remains constant
 }
 
-export function initAudio() {
+export async function initAudio() {
+    try {
+        await Tone.start();
+        console.log('Audio context started');
 
-    autoFilter.start();
-    spaceLfo.start();
-    droneLfo.start();
-    spaceNoise.triggerAttack();
-    spaceDrone.triggerAttack("C1");
-    spacePad.triggerAttack(["C2", "G2", "C3"], Tone.now(), 0.1);
+        autoFilter.start();
+        spaceLfo.start();
+        droneLfo.start();
+        spaceNoise.triggerAttack();
+        spaceDrone.triggerAttack("C1");
+        spacePad.triggerAttack(["C2", "G2", "C3"], Tone.now(), 0.1);
+
+        console.log('All audio components initialized');
+    } catch (error) {
+        console.error('Error initializing audio:', error);
+    }
 
     // Slowly modulate the pad notes for an evolving texture
     setInterval(() => {
@@ -293,4 +302,10 @@ export function initAudio() {
             Tone.Transport.bpm.value = Math.random() * 10 + 55; // Random BPM between 55 and 65
         }
     }, "4m");
+
+    // Ensure Transport is started
+    if (Tone.Transport.state !== "started") {
+        Tone.Transport.start();
+        console.log('Tone.Transport started');
+    }
 }
