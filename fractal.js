@@ -708,7 +708,7 @@ function updateVolume() {
 }
 
 function initEnemies() {
-    const enemyGeometry = new THREE.SphereGeometry(ENEMY_SIZE, 32, 32);
+    const enemyGeometry = new THREE.IcosahedronGeometry(ENEMY_SIZE, 0);
     
     for (let i = 0; i < ENEMY_COUNT; i++) {
         const enemy = new THREE.Mesh(enemyGeometry, enemyGlowMaterial.clone());
@@ -723,12 +723,12 @@ function initEnemies() {
             (Math.random() - 0.5) * ENEMY_SPEED
         );
         
-        // Add a normal sphere inside for more depth
-        const innerSphere = new THREE.Mesh(
-            new THREE.SphereGeometry(ENEMY_SIZE * 0.8, 32, 32),
+        // Add a normal icosahedron inside for more depth
+        const innerIcosahedron = new THREE.Mesh(
+            new THREE.IcosahedronGeometry(ENEMY_SIZE * 0.8, 0),
             new THREE.MeshPhongMaterial({ color: 0xff0000 })
         );
-        enemy.add(innerSphere);
+        enemy.add(innerIcosahedron);
         
         scene.add(enemy);
         enemies.push(enemy);
