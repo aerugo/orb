@@ -342,13 +342,46 @@ function updateEnemies() {
     });
 }
 
+class Particle {
+    constructor(position) {
+        const geometry = new THREE.SphereGeometry(0.02, 8, 8);
+        const material = new THREE.MeshPhongMaterial({
+            color: new THREE.Color().setHSL(Math.random(), 1, 0.5),
+            emissive: new THREE.Color().setHSL(Math.random(), 1, 0.5),
+            emissiveIntensity: 0.5,
+            transparent: true,
+            opacity: 1
+        });
+        this.mesh = new THREE.Mesh(geometry, material);
+        this.mesh.position.copy(position);
+        this.velocity = new THREE.Vector3(
+            (Math.random() - 0.5) * 0.1,
+            (Math.random() - 0.5) * 0.1,
+            (Math.random() - 0.5) * 0.1
+        );
+        this.startTime = clock.getElapsedTime();
+    }
+
+    update() {
+        this.mesh.position.add(this.velocity);
+        const age = clock.getElapsedTime() - this.startTime;
+        this.mesh.material.opacity = 1 - age;
+        this.velocity.y -= 0.001; // Add gravity effect
+        return age < 1;
+    }
+}
+
 function createExplosion(position) {
-    const explosionGeometry = new THREE.SphereGeometry(0.05, 32, 32);
-    const explosion = new THREE.Mesh(explosionGeometry, explosionMaterial);
-    explosion.position.copy(position);
-    explosion.scale.set(0.1, 0.1, 0.1);
-    scene.add(explosion);
-    explosions.push({ mesh: explosion, startTime: clock.getElapsedTime() });
+    const particleCount = 50;
+    const particles = [];
+
+    for (let i = 0; i < particleCount; i++) {
+        const particle = new Particle(position);
+        scene.add(particle.mesh);
+        particles.push(particle);
+    }
+
+    explosions.push(particles);
 
     // Play explosion sound
     explosionSynth.triggerAttackRelease("C1", "8n");
@@ -359,17 +392,16 @@ function createExplosion(position) {
 }
 
 function updateExplosions() {
-    const currentTime = clock.getElapsedTime();
-    explosions = explosions.filter(explosion => {
-        const age = currentTime - explosion.startTime;
-        if (age > 1) {
-            scene.remove(explosion.mesh);
-            return false;
-        }
-        const scale = Math.min(1, age * 4);
-        explosion.mesh.scale.set(scale, scale, scale);
-        explosion.mesh.material.opacity = 1 - age;
-        return true;
+    explosions = explosions.filter(particles => {
+        particles = particles.filter(particle => {
+            if (particle.update()) {
+                return true;
+            } else {
+                scene.remove(particle.mesh);
+                return false;
+            }
+        });
+        return particles.length > 0;
     });
 }
 
