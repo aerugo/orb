@@ -941,3 +941,18 @@
 
 # 2024-08-09 00:07:58.110982
 +Instead of starting audio with the button, start the audio when the user presses either the mouse, W, A, S, D or the space bar. 
+
+# 2024-08-09 08:26:33.770693
++/clear
+
+# 2024-08-09 08:27:00.440013
++Make the enemies more visually interesting
+
+# 2024-08-09 08:28:04.306977
++Make the enemies into 20-sided polygons
+
+# 2024-08-09 08:28:54.089385
++When the enemies get hit, show a pulsar explosion
+
+# 2024-08-09 08:30:36.066549
++It didn't work, when shooting the enemy there is just white noise
