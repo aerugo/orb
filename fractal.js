@@ -9,7 +9,6 @@ let mouse, scene, camera, renderer, instancedMesh, clock, composer, bloomPass, r
 let enemyGlowMaterial, explosionMaterial;
 let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
 let projectiles = new Set();
-let pattern1, pattern2, pattern3;
 let explosions = [];
 const TOTAL_SPHERES = 100000;
 const UPDATE_INTERVAL = 0.1 // Update colors every 0.1 seconds
