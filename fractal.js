@@ -2,8 +2,10 @@ import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
+import { ShaderMaterial } from 'three';
 
 let scene, camera, renderer, instancedMesh, clock, composer, bloomPass, raycaster, mouse, cameraDirection, isMouseDown;
+let enemyGlowMaterial;
 let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
 let synth1, synth2, synth3, reverb, delay, autoFilter, shootSynth, windNoise;
 let projectiles = new Set();
@@ -29,6 +31,37 @@ function init() {
     clock = new THREE.Clock();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
+
+    // Create enemy glow material
+    enemyGlowMaterial = new ShaderMaterial({
+        uniforms: {
+            time: { value: 0 },
+            color: { value: new THREE.Color(0xff0000) },
+            glowColor: { value: new THREE.Color(0xff5500) },
+            glowIntensity: { value: 1.0 }
+        },
+        vertexShader: `
+            varying vec3 vNormal;
+            void main() {
+                vNormal = normalize(normalMatrix * normal);
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `,
+        fragmentShader: `
+            uniform float time;
+            uniform vec3 color;
+            uniform vec3 glowColor;
+            uniform float glowIntensity;
+            varying vec3 vNormal;
+            void main() {
+                float pulse = sin(time * 5.0) * 0.5 + 0.5;
+                float intensity = pow(0.8 - dot(vNormal, vec3(0, 0, 1.0)), 2.0);
+                vec3 glow = mix(color, glowColor, intensity) * glowIntensity * pulse;
+                gl_FragColor = vec4(glow, 1.0);
+            }
+        `,
+        transparent: true
+    });
 
     initEnemies();
 
@@ -245,6 +278,8 @@ function updateProjectiles() {
 }
 
 function updateEnemies() {
+    const time = clock.getElapsedTime();
+    
     enemies.forEach(enemy => {
         // Move the enemy
         enemy.position.add(enemy.velocity);
@@ -260,6 +295,10 @@ function updateEnemies() {
 
         // Rotate the enemy to face its movement direction
         enemy.lookAt(enemy.position.clone().add(enemy.velocity));
+
+        // Update the glow effect
+        enemy.material.uniforms.time.value = time;
+        enemy.material.uniforms.glowIntensity.value = 1.0 + Math.sin(time * 2) * 0.5;
 
         // Check for collisions with projectiles
         projectiles.forEach(projectile => {
@@ -669,16 +708,10 @@ function updateVolume() {
 }
 
 function initEnemies() {
-    const enemyGeometry = new THREE.SphereGeometry(ENEMY_SIZE, 16, 16);
-    const enemyMaterial = new THREE.MeshPhongMaterial({
-        color: 0xff0000,
-        emissive: 0xff0000,
-        emissiveIntensity: 0.5,
-        shininess: 50
-    });
-
+    const enemyGeometry = new THREE.SphereGeometry(ENEMY_SIZE, 32, 32);
+    
     for (let i = 0; i < ENEMY_COUNT; i++) {
-        const enemy = new THREE.Mesh(enemyGeometry, enemyMaterial);
+        const enemy = new THREE.Mesh(enemyGeometry, enemyGlowMaterial.clone());
         enemy.position.set(
             (Math.random() - 0.5) * 4,
             (Math.random() - 0.5) * 4,
@@ -689,6 +722,14 @@ function initEnemies() {
             (Math.random() - 0.5) * ENEMY_SPEED,
             (Math.random() - 0.5) * ENEMY_SPEED
         );
+        
+        // Add a normal sphere inside for more depth
+        const innerSphere = new THREE.Mesh(
+            new THREE.SphereGeometry(ENEMY_SIZE * 0.8, 32, 32),
+            new THREE.MeshPhongMaterial({ color: 0xff0000 })
+        );
+        enemy.add(innerSphere);
+        
         scene.add(enemy);
         enemies.push(enemy);
     }
