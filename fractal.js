@@ -1,8 +1,8 @@
 import * as THREE from 'three';
+import { AdditiveBlending, ShaderMaterial } from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
-import { ShaderMaterial, AdditiveBlending } from 'three';
 
 let scene, camera, renderer, instancedMesh, clock, composer, bloomPass, raycaster, mouse, cameraDirection, isMouseDown;
 let enemyGlowMaterial, explosionMaterial;
@@ -111,10 +111,14 @@ function init() {
     renderer.domElement.requestPointerLock = renderer.domElement.requestPointerLock || renderer.domElement.mozRequestPointerLock;
     document.addEventListener('click', () => {
         renderer.domElement.requestPointerLock();
+        fadeOutInstructions();
     });
 
     // Initialize audio
     initAudio();
+
+    // Show instructions
+    showInstructions();
 
     // Function to start audio
     function startAudio() {
@@ -792,6 +796,19 @@ function updateVolume() {
     synth2.volume.rampTo(volume, 0.1);
     synth3.volume.rampTo(volume, 0.1);
     // Wind noise volume remains constant
+}
+
+function showInstructions() {
+    const instructions = document.getElementById('instructions');
+    instructions.style.opacity = '1';
+}
+
+function fadeOutInstructions() {
+    const instructions = document.getElementById('instructions');
+    instructions.style.opacity = '0';
+    setTimeout(() => {
+        instructions.style.display = 'none';
+    }, 2000); // Wait for the fade out transition to complete before hiding
 }
 
 function initEnemies() {
