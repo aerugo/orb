@@ -1,4 +1,4 @@
-import { explosionSynth, initAudio, shootSynth, updateChord, updateVolume } from 'audio';
+import { explosionSynth, initAudio, shootSynth, startAudio, updateChord, updateVolume } from 'audio';
 import * as THREE from 'three';
 import { AdditiveBlending, ShaderMaterial } from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
@@ -119,17 +119,6 @@ function init() {
 
     // Show instructions
     showInstructions();
-
-    // Function to start audio
-    function startAudio() {
-        if (Tone.context.state !== 'running') {
-            Tone.start();
-            pattern1.start(0);
-            pattern2.start("8n");
-            pattern3.start("8n.");
-            Tone.Transport.start();
-        }
-    }
 
     // Add event listeners for starting audio
     window.addEventListener('mousedown', startAudio);

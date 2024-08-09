@@ -65,7 +65,7 @@ export const explosionSynth = new Tone.MembraneSynth({
         release: 1.4,
         attackCurve: "exponential"
     }
-}).connect(reverb, distortion, lowPass);
+}).connect(reverb).connect(distortion).connect(lowPass);
 
 export const spaceNoise = new Tone.NoiseSynth({
     noise: {
@@ -79,7 +79,7 @@ export const spaceNoise = new Tone.NoiseSynth({
         release: 3
     },
     volume: -40
-}).connect(reverb, spaceFilter, chorus)
+}).connect(reverb).connect(spaceFilter).connect(chorus);
 
 export const spaceDrone = new Tone.FMSynth({
     harmonicity: 0.5,
@@ -195,8 +195,8 @@ export function updateChord(interpolationFactor) {
 
     // Adjust tempo based on interpolationFactor
     // Slower when blob (interpolationFactor close to 0), faster when sphere (interpolationFactor close to 1)
-    const minBPM = 55;  // Slowest tempo
-    const maxBPM = 65; // Fastest tempo
+    const minBPM = 35;  // Slowest tempo
+    const maxBPM = 85; // Fastest tempo
     const newBPM = minBPM + (maxBPM - minBPM) * interpolationFactor;
     Tone.Transport.bpm.rampTo(newBPM, 2); // Ramp to new BPM over 2 seconds for smooth transition
 }
