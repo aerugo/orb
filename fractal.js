@@ -121,10 +121,12 @@ function init() {
     showInstructions();
 
     // Add event listeners for starting audio
-    window.addEventListener('mousedown', startAudio);
-    window.addEventListener('keydown', (event) => {
+    window.addEventListener('mousedown', async () => {
+        await startAudio();
+    });
+    window.addEventListener('keydown', async (event) => {
         if (['w', 'a', 's', 'd', ' '].includes(event.key.toLowerCase())) {
-            startAudio();
+            await startAudio();
         }
     });
 

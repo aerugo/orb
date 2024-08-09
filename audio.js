@@ -223,26 +223,7 @@ export function updateVolume(distanceFromCenter) {
 }
 
 export function initAudio() {
-
-    autoFilter.start();
-    spaceLfo.start();
-    droneLfo.start();
-    
-    spaceNoise.triggerAttack();
-    spaceDrone.triggerAttack("C1");
-    spacePad.triggerAttack(["C2", "G2", "C3"], Tone.now(), 0.1);
-
-    // Slowly modulate the pad notes for an evolving texture
-    setInterval(() => {
-        spacePad.triggerRelease(["C2", "G2", "C3"]);
-        setTimeout(() => {
-            const notes = ["C2", "D#2", "G2", "A#2", "C3", "D#3"].sort(() => Math.random() - 0.5).slice(0, 3);
-            spacePad.triggerAttack(notes, Tone.now(), 0.1);
-        }, 2000);
-    }, 15000);
-
-
-    // Create multiple synths for layered drones
+    // This function now only sets up the audio components without starting them
     const synthSettings = {
         oscillator: {
             type: "fatsawtooth",
@@ -257,49 +238,53 @@ export function initAudio() {
         }
     };
 
-    if (!synth1) synth1 = new Tone.Synth(synthSettings).connect(autoFilter);
-    if (!synth2) synth2 = new Tone.Synth(synthSettings).connect(autoFilter);
-    if (!synth3) synth3 = new Tone.Synth(synthSettings).connect(autoFilter);
+    synth1 = new Tone.Synth(synthSettings).connect(autoFilter);
+    synth2 = new Tone.Synth(synthSettings).connect(autoFilter);
+    synth3 = new Tone.Synth(synthSettings).connect(autoFilter);
 
-    // Create drone patterns
-    if (!pattern1) {
-        pattern1 = new Tone.Loop((time) => {
-            synth1.triggerAttackRelease("C2", "2n", time);
-        }, "2n");
-    }
+    pattern1 = new Tone.Loop((time) => {
+        synth1.triggerAttackRelease("C2", "2n", time);
+    }, "2n");
 
-    if (!pattern2) {
-        pattern2 = new Tone.Loop((time) => {
-            synth2.triggerAttackRelease("G2", "4n", time);
-        }, "4n");
-    }
+    pattern2 = new Tone.Loop((time) => {
+        synth2.triggerAttackRelease("G2", "4n", time);
+    }, "4n");
 
-    if (!pattern3) {
-        pattern3 = new Tone.Loop((time) => {
-            synth3.triggerAttackRelease("E2", "8n", time);
-        }, "8n");
-    }
+    pattern3 = new Tone.Loop((time) => {
+        synth3.triggerAttackRelease("E2", "8n", time);
+    }, "8n");
 
-    // Set up drone patterns
     Tone.Transport.timeSignature = [4, 4];
     Tone.Transport.bpm.value = 60;
 
-    pattern1.start(0);
-    pattern2.start("8n");
-    pattern3.start("8n.");
-
-    // Add subtle modulations
     Tone.Transport.scheduleRepeat((time) => {
         if (Math.random() < 0.1) {
-            Tone.Transport.bpm.value = Math.random() * 10 + 55; // Random BPM between 55 and 65
+            Tone.Transport.bpm.value = Math.random() * 10 + 55;
         }
     }, "4m");
 }
 
 // Function to start audio
-export function startAudio() {
-    if (Tone.context.state !== 'running') {
-        Tone.start();
+export async function startAudio() {
+    await Tone.start();
+    if (Tone.context.state === 'running') {
+        autoFilter.start();
+        spaceLfo.start();
+        droneLfo.start();
+        
+        spaceNoise.triggerAttack();
+        spaceDrone.triggerAttack("C1");
+        spacePad.triggerAttack(["C2", "G2", "C3"], Tone.now(), 0.1);
+
+        // Slowly modulate the pad notes for an evolving texture
+        setInterval(() => {
+            spacePad.triggerRelease(["C2", "G2", "C3"]);
+            setTimeout(() => {
+                const notes = ["C2", "D#2", "G2", "A#2", "C3", "D#3"].sort(() => Math.random() - 0.5).slice(0, 3);
+                spacePad.triggerAttack(notes, Tone.now(), 0.1);
+            }, 2000);
+        }, 15000);
+
         pattern1.start(0);
         pattern2.start("8n");
         pattern3.start("8n.");
