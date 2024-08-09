@@ -355,7 +355,11 @@ function createExplosion(position) {
     explosions.push({ mesh: explosion, startTime: clock.getElapsedTime() });
 
     // Play explosion sound
-    explosionSynth.triggerAttackRelease("C4", "16n");
+    explosionSynth.triggerAttackRelease("C1", "8n");
+    
+    // Add a quick pitch drop for more impact
+    explosionSynth.frequency.setValueAtTime("C1", Tone.now());
+    explosionSynth.frequency.exponentialRampToValueAtTime("A0", Tone.now() + 0.1);
 }
 
 function updateExplosions() {
@@ -497,17 +501,28 @@ function initAudio() {
     }).connect(reverb);
 
     // Create explosion synth
-    explosionSynth = new Tone.NoiseSynth({
-        noise: {
-            type: "white"
+    explosionSynth = new Tone.MembraneSynth({
+        pitchDecay: 0.05,
+        octaves: 10,
+        oscillator: {
+            type: "sine"
         },
         envelope: {
             attack: 0.001,
-            decay: 0.2,
-            sustain: 0.1,
-            release: 0.3
+            decay: 0.4,
+            sustain: 0.01,
+            release: 1.4,
+            attackCurve: "exponential"
         }
     }).connect(reverb);
+
+    // Add distortion for more impact
+    const distortion = new Tone.Distortion(0.8).toDestination();
+    explosionSynth.connect(distortion);
+
+    // Add a low-pass filter for a deeper sound
+    const lowPass = new Tone.Filter(800, "lowpass").toDestination();
+    explosionSynth.connect(lowPass);
 
     // Create a more complex noise source
     const spaceNoise = new Tone.NoiseSynth({
