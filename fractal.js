@@ -307,8 +307,11 @@ function updateProjectiles() {
 
 function updateEnemies() {
     const time = clock.getElapsedTime();
+    const newEnemies = [];
     
-    enemies.forEach(enemy => {
+    for (let i = 0; i < enemies.length; i++) {
+        const enemy = enemies[i];
+        
         // Move the enemy
         enemy.position.add(enemy.velocity);
 
@@ -328,6 +331,23 @@ function updateEnemies() {
         enemy.material.uniforms.time.value = time;
         enemy.material.uniforms.glowIntensity.value = 1.0 + Math.sin(time * 2) * 0.5;
 
+        // Check for collisions with other enemies
+        for (let j = i + 1; j < enemies.length; j++) {
+            const otherEnemy = enemies[j];
+            if (enemy.position.distanceTo(otherEnemy.position) < ENEMY_SIZE * 2) {
+                // Enemies collided, create a new enemy
+                if (enemies.length < 50) { // Limit the total number of enemies
+                    const newEnemy = createEnemy(enemy.position.clone());
+                    newEnemies.push(newEnemy);
+                }
+                
+                // Bounce off each other
+                const normal = enemy.position.clone().sub(otherEnemy.position).normalize();
+                enemy.velocity.reflect(normal);
+                otherEnemy.velocity.reflect(normal.negate());
+            }
+        }
+
         // Check for collisions with projectiles
         projectiles.forEach(projectile => {
             if (enemy.position.distanceTo(projectile.position) < ENEMY_SIZE + 0.05) {
@@ -339,7 +359,10 @@ function updateEnemies() {
                 createExplosion(enemy.position);
             }
         });
-    });
+    }
+    
+    // Add new enemies created from collisions
+    enemies = enemies.concat(newEnemies);
 }
 
 class Particle {
@@ -492,30 +515,36 @@ function fadeOutInstructions() {
     }, 2000); // Wait for the fade out transition to complete before hiding
 }
 
-function initEnemies() {
+function createEnemy(position) {
     const enemyGeometry = new THREE.IcosahedronGeometry(ENEMY_SIZE, 0);
+    const enemy = new THREE.Mesh(enemyGeometry, enemyGlowMaterial.clone());
     
+    enemy.position.copy(position);
+    enemy.velocity = new THREE.Vector3(
+        (Math.random() - 0.5) * ENEMY_SPEED,
+        (Math.random() - 0.5) * ENEMY_SPEED,
+        (Math.random() - 0.5) * ENEMY_SPEED
+    );
+    
+    // Add a normal icosahedron inside for more depth
+    const innerIcosahedron = new THREE.Mesh(
+        new THREE.IcosahedronGeometry(ENEMY_SIZE * 0.8, 0),
+        new THREE.MeshPhongMaterial({ color: 0xff0000 })
+    );
+    enemy.add(innerIcosahedron);
+    
+    scene.add(enemy);
+    return enemy;
+}
+
+function initEnemies() {
     for (let i = 0; i < ENEMY_COUNT; i++) {
-        const enemy = new THREE.Mesh(enemyGeometry, enemyGlowMaterial.clone());
-        enemy.position.set(
+        const position = new THREE.Vector3(
             (Math.random() - 0.5) * 4,
             (Math.random() - 0.5) * 4,
             (Math.random() - 0.5) * 4
         );
-        enemy.velocity = new THREE.Vector3(
-            (Math.random() - 0.5) * ENEMY_SPEED,
-            (Math.random() - 0.5) * ENEMY_SPEED,
-            (Math.random() - 0.5) * ENEMY_SPEED
-        );
-        
-        // Add a normal icosahedron inside for more depth
-        const innerIcosahedron = new THREE.Mesh(
-            new THREE.IcosahedronGeometry(ENEMY_SIZE * 0.8, 0),
-            new THREE.MeshPhongMaterial({ color: 0xff0000 })
-        );
-        enemy.add(innerIcosahedron);
-        
-        scene.add(enemy);
+        const enemy = createEnemy(position);
         enemies.push(enemy);
     }
 }
