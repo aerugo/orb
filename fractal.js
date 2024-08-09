@@ -308,6 +308,7 @@ function updateProjectiles() {
 function updateEnemies() {
     const time = clock.getElapsedTime();
     const newEnemies = [];
+    const MULTIPLICATION_COOLDOWN = 3; // 3 seconds cooldown
     
     for (let i = 0; i < enemies.length; i++) {
         const enemy = enemies[i];
@@ -335,10 +336,14 @@ function updateEnemies() {
         for (let j = i + 1; j < enemies.length; j++) {
             const otherEnemy = enemies[j];
             if (enemy.position.distanceTo(otherEnemy.position) < ENEMY_SIZE * 2) {
-                // Enemies collided, create a new enemy
-                if (enemies.length < 50) { // Limit the total number of enemies
+                // Enemies collided, create a new enemy if cooldown has passed
+                if (enemies.length < 50 && 
+                    time - enemy.lastMultiplicationTime > MULTIPLICATION_COOLDOWN &&
+                    time - otherEnemy.lastMultiplicationTime > MULTIPLICATION_COOLDOWN) {
                     const newEnemy = createEnemy(enemy.position.clone());
                     newEnemies.push(newEnemy);
+                    enemy.lastMultiplicationTime = time;
+                    otherEnemy.lastMultiplicationTime = time;
                 }
                 
                 // Bounce off each other
@@ -532,6 +537,9 @@ function createEnemy(position) {
         new THREE.MeshPhongMaterial({ color: 0xff0000 })
     );
     enemy.add(innerIcosahedron);
+    
+    // Add lastMultiplicationTime property
+    enemy.lastMultiplicationTime = clock.getElapsedTime();
     
     scene.add(enemy);
     return enemy;
