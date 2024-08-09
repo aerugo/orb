@@ -15,6 +15,12 @@ let interpolationFactor = 0;
 let interpolationDirection = 1;
 const INTERPOLATION_SPEED = 0.001;
 
+// Enemy-related variables
+let enemies = [];
+const ENEMY_COUNT = 5;
+const ENEMY_SPEED = 0.02;
+const ENEMY_SIZE = 0.1;
+
 function init() {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(110, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -23,6 +29,8 @@ function init() {
     clock = new THREE.Clock();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
+
+    initEnemies();
 
     // Initialize camera direction and mouse state
     cameraDirection = new THREE.Vector3(0, 0, -1);
@@ -218,6 +226,9 @@ function animate() {
     // Update and render projectiles
     updateProjectiles();
 
+    // Update and render enemies
+    updateEnemies();
+
     composer.render();
 }
 
@@ -230,6 +241,37 @@ function updateProjectiles() {
             scene.remove(projectile);
             projectiles.delete(projectile);
         }
+    });
+}
+
+function updateEnemies() {
+    enemies.forEach(enemy => {
+        // Move the enemy
+        enemy.position.add(enemy.velocity);
+
+        // Bounce off the edges of a cubic space
+        const boundsSize = 2;
+        ['x', 'y', 'z'].forEach(axis => {
+            if (Math.abs(enemy.position[axis]) > boundsSize) {
+                enemy.position[axis] = Math.sign(enemy.position[axis]) * boundsSize;
+                enemy.velocity[axis] *= -1;
+            }
+        });
+
+        // Rotate the enemy to face its movement direction
+        enemy.lookAt(enemy.position.clone().add(enemy.velocity));
+
+        // Check for collisions with projectiles
+        projectiles.forEach(projectile => {
+            if (enemy.position.distanceTo(projectile.position) < ENEMY_SIZE + 0.05) {
+                // Enemy hit by projectile
+                scene.remove(enemy);
+                enemies = enemies.filter(e => e !== enemy);
+                scene.remove(projectile);
+                projectiles.delete(projectile);
+                // You could add a sound effect or particle effect here
+            }
+        });
     });
 }
 
@@ -624,6 +666,32 @@ function updateVolume() {
     synth2.volume.rampTo(volume, 0.1);
     synth3.volume.rampTo(volume, 0.1);
     // Wind noise volume remains constant
+}
+
+function initEnemies() {
+    const enemyGeometry = new THREE.SphereGeometry(ENEMY_SIZE, 16, 16);
+    const enemyMaterial = new THREE.MeshPhongMaterial({
+        color: 0xff0000,
+        emissive: 0xff0000,
+        emissiveIntensity: 0.5,
+        shininess: 50
+    });
+
+    for (let i = 0; i < ENEMY_COUNT; i++) {
+        const enemy = new THREE.Mesh(enemyGeometry, enemyMaterial);
+        enemy.position.set(
+            (Math.random() - 0.5) * 4,
+            (Math.random() - 0.5) * 4,
+            (Math.random() - 0.5) * 4
+        );
+        enemy.velocity = new THREE.Vector3(
+            (Math.random() - 0.5) * ENEMY_SPEED,
+            (Math.random() - 0.5) * ENEMY_SPEED,
+            (Math.random() - 0.5) * ENEMY_SPEED
+        );
+        scene.add(enemy);
+        enemies.push(enemy);
+    }
 }
 
 init();
