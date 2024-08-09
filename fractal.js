@@ -344,40 +344,57 @@ function updateEnemies() {
 
 class Particle {
     constructor(position) {
-        const geometry = new THREE.SphereGeometry(0.02, 8, 8);
-        const material = new THREE.MeshPhongMaterial({
-            color: new THREE.Color().setHSL(Math.random(), 1, 0.5),
-            emissive: new THREE.Color().setHSL(Math.random(), 1, 0.5),
-            emissiveIntensity: 0.5,
+        const geometry = new THREE.BufferGeometry();
+        const vertices = new Float32Array(3);
+        geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+
+        const material = new THREE.PointsMaterial({
+            color: new THREE.Color().setHSL(Math.random() * 0.1 + 0.05, 1, 0.5), // Fire colors
+            size: 0.05,
             transparent: true,
-            opacity: 1
+            blending: THREE.AdditiveBlending,
+            depthWrite: false
         });
-        this.mesh = new THREE.Mesh(geometry, material);
-        this.mesh.position.copy(position);
+
+        this.particle = new THREE.Points(geometry, material);
+        this.particle.position.copy(position);
         this.velocity = new THREE.Vector3(
-            (Math.random() - 0.5) * 0.1,
-            (Math.random() - 0.5) * 0.1,
-            (Math.random() - 0.5) * 0.1
+            (Math.random() - 0.5) * 0.2,
+            (Math.random() - 0.5) * 0.2,
+            (Math.random() - 0.5) * 0.2
         );
         this.startTime = clock.getElapsedTime();
+        this.lifetime = Math.random() * 0.5 + 0.5; // Random lifetime between 0.5 and 1 second
     }
 
     update() {
-        this.mesh.position.add(this.velocity);
+        this.particle.position.add(this.velocity);
         const age = clock.getElapsedTime() - this.startTime;
-        this.mesh.material.opacity = 1 - age;
-        this.velocity.y -= 0.001; // Add gravity effect
-        return age < 1;
+        const lifeRatio = age / this.lifetime;
+
+        // Update color to simulate cooling effect
+        const hue = 0.1 - lifeRatio * 0.1; // From orange-red to dark red
+        const lightness = 0.5 - lifeRatio * 0.3; // Dimming over time
+        this.particle.material.color.setHSL(hue, 1, lightness);
+
+        // Update size
+        this.particle.material.size = 0.05 * (1 - lifeRatio);
+
+        // Update opacity
+        this.particle.material.opacity = 1 - lifeRatio;
+
+        this.velocity.y += 0.001; // Slight upward acceleration for fire effect
+        return age < this.lifetime;
     }
 }
 
 function createExplosion(position) {
-    const particleCount = 50;
+    const particleCount = 200; // Increased from 50 to 200 for denser effect
     const particles = [];
 
     for (let i = 0; i < particleCount; i++) {
         const particle = new Particle(position);
-        scene.add(particle.mesh);
+        scene.add(particle.particle);
         particles.push(particle);
     }
 
@@ -397,7 +414,7 @@ function updateExplosions() {
             if (particle.update()) {
                 return true;
             } else {
-                scene.remove(particle.mesh);
+                scene.remove(particle.particle);
                 return false;
             }
         });
